@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doodle Cricket Spiel - Kostenlos Online Spielen</title>
+    <meta name="description" content="Spiele Doodle Cricket kostenlos online! Das beliebte Google Doodle Cricket Spiel mit realistischer Physik. Perfekt für Cricket-Fans und Casual-Gamer. Jetzt spielen!">
+    <meta name="keywords" content="doodle cricket, cricket spiel, online cricket, google doodle, kostenlos spielen, cricket simulator, sport spiel">
+    <meta name="author" content="Doodle Cricket">
+    <meta property="og:title" content="Doodle Cricket - Das ultimative Online Cricket Erlebnis">
+    <meta property="og:description" content="Erlebe das beliebte Google Doodle Cricket Spiel! Kostenlos, ohne Download, direkt im Browser spielbar.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%2300ff88' stroke='%23fff' stroke-width='3'/%3E%3Cpath d='M30 45h40v10H30z' fill='%23fff'/%3E%3Ccircle cx='25' cy='50' r='3' fill='%23ff4444'/%3E%3C/svg%3E">
+    <meta name="twitter:card" content="summary_large_image">
+   <link rel="manifest" href="https://jordnanblee.github.io/manifest.json" />
+<link rel="shortcut icon" href="https://jordnanblee.github.io/favicon.ico">
+<link rel="canonical" href="https://jordnanblee.github.io/doodlecricket/">
+    
+    <!-- Favicon SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2300ff88'/%3E%3Cstop offset='1' stop-color='%2300cc66'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='url(%23bg)' stroke='%23fff' stroke-width='3'/%3E%3Cpath d='M30 45h40v10H30z' fill='%23fff' rx='2'/%3E%3Ccircle cx='25' cy='50' r='3' fill='%23ff4444'/%3E%3Cpath d='M75 35l8 8-8 8' stroke='%23fff' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            background: linear-gradient(45deg, #fff, #ffeb3b, #4caf50);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .play-button {
+            background: linear-gradient(45deg, #4caf50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 3rem;
+        }
+
+        .play-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(76, 175, 80, 0.6);
+            background: linear-gradient(45deg, #5cbf60, #4caf50);
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 2rem auto;
+            position: relative;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .game-title {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .fullscreen-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .fullscreen-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .game-iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            display: block;
+        }
+
+        .ad-container {
+            display: none;
+            justify-content: center;
+            margin: 30px 0;
+            padding: 20px;
+        }
+
+        .ad-banner {
+            width: 728px;
+            height: 90px;
+            background: linear-gradient(45deg, #f1f3f4, #e8eaed);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-weight: 500;
+            border: 2px dashed #ccc;
+        }
+
+        .features {
+            padding: 60px 20px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .feature-desc {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+        }
+
+        .seo-content {
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .seo-content h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .seo-content h3 {
+            color: #4caf50;
+            font-size: 1.5rem;
+            margin: 30px 0 15px 0;
+        }
+
+        .seo-content p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-ball {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ffeb3b, #ff9800);
+            border-radius: 50%;
+            animation: floatBall 8s infinite ease-in-out;
+        }
+
+        .floating-ball:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-ball:nth-child(2) { top: 20%; right: 10%; animation-delay: 2s; }
+        .floating-ball:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 4s; }
+        .floating-ball:nth-child(4) { bottom: 10%; right: 20%; animation-delay: 6s; }
+
+        @keyframes floatBall {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 1; }
+        }
+
+        @media (min-width: 768px) {
+            .ad-container {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .game-iframe {
+                height: 400px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .game-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content {
+                padding: 0 15px;
+            }
+            
+            .play-button {
+                padding: 12px 30px;
+                font-size: 1.1rem;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-ball"></div>
+        <div class="floating-ball"></div>
+        <div class="floating-ball"></div>
+        <div class="floating-ball"></div>
+    </div>
+
+    <div class="hero">
+        <div class="content">
+            <h1>🏏 Doodle Cricket</h1>
+            <p class="subtitle">Das ultimative Online-Cricket-Erlebnis wartet auf Sie!</p>
+            <button class="play-button pulse" onclick="scrollToGame()">Jetzt Spielen!</button>
+            
+            <div class="game-container" id="gameContainer">
+                <div class="game-header">
+                    <div class="game-title">🏏 Doodle Cricket Spiel</div>
+                    <button class="fullscreen-btn" onclick="toggleFullscreen()">Vollbild</button>
+                </div>
+                <iframe 
+                    class="game-iframe" 
+                    id="gameFrame"
+                    src="https://doodlecricket.pages.dev/" 
+                    title="Doodle Cricket Spiel"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <div class="ad-container">
+                <div class="ad-banner">
+                    Werbung 728x90 - Nur auf Desktop sichtbar
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎮</div>
+                <h3 class="feature-title">Sofort Spielbereit</h3>
+                <p class="feature-desc">Keine Downloads erforderlich! Spielen Sie direkt in Ihrem Browser mit nur einem Klick.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3 class="feature-title">Authentisches Cricket</h3>
+                <p class="feature-desc">Realistische Physik und Gameplay, das das echte Cricket-Gefühl vermittelt.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3 class="feature-title">Überall Spielen</h3>
+                <p class="feature-desc">Responsives Design funktioniert perfekt auf Desktop, Tablet und Smartphone.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="seo-content">
+        <h2>Willkommen beim ultimativen Doodle Cricket Erlebnis</h2>
+        
+        <p>Entdecken Sie die Welt des digitalen Crickets mit unserem kostenlosen Online-Spiel! Doodle Cricket kombiniert die Spannung des traditionellen Crickets mit modernem, zugänglichem Gameplay, das sowohl Anfänger als auch erfahrene Spieler begeistern wird.</p>
+
+        <h3>Was ist Doodle Cricket?</h3>
+        <p>Doodle Cricket ist eine digitale Interpretation des beliebten Google Doodle-Spiels, das ursprünglich zu Ehren der Cricket-Weltmeisterschaft entwickelt wurde. Unser Spiel bietet eine verbesserte Version mit flüssigerer Grafik, responsivem Design und optimiertem Gameplay für alle Geräte.</p>
+
+        <h3>Spielfunktionen und Features</h3>
+        <p>Unser Cricket-Simulator bietet realistische Physik, intuitive Steuerung und stundenlangen Spielspaß. Sie können Ihre Schlagtechnik perfektionieren, Highscores erreichen und die Freude am Cricket in einer zugänglichen, digitalen Form erleben.</p>
+
+        <h3>Warum Doodle Cricket spielen?</h3>
+        <p>Cricket ist einer der beliebtesten Sportarten weltweit, und unser Spiel macht diese faszinierende Disziplin für jeden zugänglich. Ob Sie ein Cricket-Fan sind oder einfach nur Spaß an Sport-Simulationen haben - Doodle Cricket bietet unterhaltsames Gameplay ohne komplizierte Regeln oder zeitaufwändige Tutorials.</p>
+
+        <h3>Perfekt für alle Geräte</h3>
+        <p>Unser responsives Design gewährleistet, dass Sie das Spiel auf jedem Gerät optimal erleben können. Von Desktop-Computern über Tablets bis hin zu Smartphones - Doodle Cricket passt sich automatisch an Ihre Bildschirmgröße an und bietet immer die beste Spielerfahrung.</p>
+
+        <h3>Kostenlos und ohne Registrierung</h3>
+        <p>Genießen Sie unbegrenzten Spielspaß völlig kostenlos! Keine Registrierung, keine versteckten Kosten, keine lästigen Downloads. Einfach die Seite öffnen und sofort loslegen.</p>
+    </div>
+
+    <script>
+        function scrollToGame() {
+            document.getElementById('gameContainer').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+
+        function toggleFullscreen() {
+            const gameFrame = document.getElementById('gameFrame');
+            const container = document.getElementById('gameContainer');
+            
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {
+                    console.log('Fullscreen error:', err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Add some interactive animations
+        document.addEventListener('mousemove', (e) => {
+            const balls = document.querySelectorAll('.floating-ball');
+            balls.forEach((ball, index) => {
+                const speed = (index + 1) * 0.01;
+                const x = e.clientX * speed;
+                const y = e.clientY * speed;
+                ball.style.transform += ` translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Smooth loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Add click effects to buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                let ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.background = 'rgba(255,255,255,0.6)';
+                ripple.style.transform = 'translate(-50%, -50%)';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.borderRadius = '50%';
+                ripple.style.animation = 'ripple-effect 0.6s linear';
+                
+                let rect = this.getBoundingClientRect();
+                let size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = (e.clientX - rect.left) + 'px';
+                ripple.style.top = (e.clientY - rect.top) + 'px';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add ripple effect animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple-effect {
+                to {
+                    transform: translate(-50%, -50%) scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+<script>if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/sw.js')
+.then(registration => {console.log('Service Worker registered successfully:', registration);})
+.catch(error => {console.log('Error in Service Worker registration:', error);});});}</script>
+<script src="https://cdn.counter.dev/script.js" data-id="765b5d93-838f-4789-a97e-d18e533d9baf" data-utcoffset="3"></script>
+</body>
+</html>
